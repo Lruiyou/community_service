@@ -5,6 +5,7 @@ import com.alan.project.dto.Result;
 import com.alan.project.entity.AccessToken;
 import com.alan.project.entity.GithubUser;
 import com.alan.project.enums.ResultCode;
+import com.alan.project.exception.CustomizeException;
 import com.alan.project.service.UserService;
 import com.alan.project.utils.HandleGithub;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,8 @@ public class AuthorizeController {
     public String callback(@RequestParam(name = "code") String code,
                            @RequestParam(name = "state") String state,
                            HttpServletResponse response){
+        String url = state.substring(state.indexOf("/"));
+        //String newState = state.substring(0,state.indexOf("/"));
         AccessToken accessToken = new AccessToken();
         accessToken.setClient_id(clientId);
         accessToken.setClient_secret(clientSecret);
@@ -46,7 +49,7 @@ public class AuthorizeController {
         String token = HandleGithub.getAccessToken(accessToken);
         GithubUser githubUser = HandleGithub.getUser(token);
 
-        if (githubUser != null && githubUser.getId() != null){
+        if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
             String newToken = UUID.randomUUID().toString();
             user.setToken(newToken);
@@ -56,13 +59,14 @@ public class AuthorizeController {
             user.setGithubUrl(githubUser.getHtmlUrl());
             user.setCreateTime(System.currentTimeMillis());
             userService.createOrUpdate(user);
-            Cookie cookie = new Cookie("token",newToken);
+            Cookie cookie = new Cookie("token", newToken);
             cookie.setMaxAge(60 * 60 * 24 * 7);
             response.addCookie(cookie);
-            return "redirect:http://localhost:8080";
-        }else {
-            return "";
+            return "redirect:http://localhost:8080" + url;
+            } else {
+                return "";
         }
+
     }
 
 }

@@ -21,17 +21,22 @@ public class QuestionController {
     @PostMapping("/question")
     @ResponseBody
     public Result createQuestion(@RequestParam(value = "creator") String creator,
+                                 @RequestParam(value = "github_url") String githubUrl,
                                  @RequestParam(value = "title") String title,
                                  @RequestParam(value = "content") String content,
                                  @RequestParam(value = "html_content") String htmlContent,
                                  @RequestParam(value = "tag") String tag ){
         Question question = new Question();
         question.setCreator(creator);
+        question.setGithubUrl(githubUrl);
         question.setTitle(title);
         question.setContent(content);
         question.setHtmlContent(htmlContent);
         question.setTag(tag);
         question.setCreateTime(System.currentTimeMillis());
+//        question.setLikeCount(0);
+//        question.setViewCount(0);
+//        question.setCommentCount(0);
         Boolean sqlResult = questionService.createQuestion(question);
         if (sqlResult){
             return Result.success();
