@@ -19,4 +19,6 @@ public interface QuestionMapper {
     Integer questionCounts(Query query);
 
     List<Question> getQuestionList(Query query);
+
+    List<Question> getQuestions(@Param("offset") int offset,@Param("limit") int limit);
 }

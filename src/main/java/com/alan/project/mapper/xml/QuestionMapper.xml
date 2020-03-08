@@ -34,4 +34,8 @@
     <update id="updateQuestionById" parameterType="com.alan.project.dao.Question" >
         update t_question set title = #{title}, content = #{content} ,html_content = #{htmlContent},tag = #{tag},file_url = #{fileUrl} where id = #{id}
     </update>
+
+    <select id="getQuestions" resultType="com.alan.project.dao.Question">
+        select * from t_question limit #{offset},#{limit};
+    </select>
 </mapper>
