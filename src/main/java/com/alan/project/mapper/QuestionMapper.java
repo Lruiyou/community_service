@@ -32,4 +32,6 @@ public interface QuestionMapper {
     void increaseLikeById(@Param("questionId") Integer questionId);//点赞数加一
 
     void decreaseLikeById(@Param("questionId") Integer questionId);//点赞数减一
+
+    Question getQuestionById(@Param("id") Integer id);//根据问题id获取问题详情
 }

@@ -41,6 +41,17 @@ public class QuestionController {
     }
 
     /**
+     * 获取问题详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/question/details")
+    public Result getQuestionDetails(@RequestParam("id")Integer id){
+        Question question = questionService.getQuestionById(id);
+        return  question != null ? Result.success(question) : Result.failure(ResultCode.ERROR);
+    }
+
+    /**
      * 新增问题接口
      * @param creator
      * @param avatar
@@ -55,6 +66,7 @@ public class QuestionController {
     @PostMapping("/question")
     @ResponseBody
     public Result createQuestion(@RequestParam(value = "creator") String creator,
+                                 @RequestParam(value = "creator_name") String creatorName,
                                  @RequestParam(value = "avatar") String avatar,
                                  @RequestParam(value = "github_url") String githubUrl,
                                  @RequestParam(value = "title") String title,
@@ -64,6 +76,7 @@ public class QuestionController {
                                  @RequestParam(value = "file_url") String fileUrl){
         Question question = new Question();
         question.setCreator(creator);
+        question.setCreatorName(creatorName);
         question.setAvatar(avatar);
         question.setGithubUrl(githubUrl);
         question.setTitle(title);
@@ -104,6 +117,10 @@ public class QuestionController {
         }
     }
 
+    /**
+     * 热门问题接口
+     * @return
+     */
     @GetMapping("/question/hot")
     @ResponseBody
     public Result getHotTopics(){

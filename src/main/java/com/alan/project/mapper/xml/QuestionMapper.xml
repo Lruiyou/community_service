@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alan.project.mapper.QuestionMapper">
     <insert id="createQuestion" parameterType="com.alan.project.dao.Question" >
-        insert into t_question (creator,avatar,github_url,title,content,html_content,tag,file_url,create_time,modified)
-        values (#{creator},#{avatar},#{githubUrl},#{title},#{content},#{htmlContent},#{tag},#{fileUrl},#{createTime},#{modified})
+        insert into t_question (creator,creator_name, avatar,github_url,title,content,html_content,tag,file_url,create_time,modified)
+        values (#{creator},#{creatorName},#{avatar},#{githubUrl},#{title},#{content},#{htmlContent},#{tag},#{fileUrl},#{createTime},#{modified})
     </insert>
 
     <select id="getQuestionByCreator" parameterType="String" resultType="com.alan.project.dao.Question">
@@ -58,4 +58,8 @@
     <update id="decreaseLikeById" parameterType="java.lang.Integer">
         update t_question set like_count = like_count - 1 where id = #{questionId}
     </update>
+
+    <select id="getQuestionById" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Question">
+        select * from t_question where id = #{id}
+    </select>
 </mapper>

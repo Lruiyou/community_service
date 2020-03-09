@@ -6,6 +6,7 @@ import lombok.Data;
 public class Question {
     private Integer id;
     private String creator;
+    private String creatorName;
     private String avatar;
     private String githubUrl;
     private String title;

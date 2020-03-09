@@ -75,4 +75,8 @@ public class QuestionService {
     public void decreaseLikeById(Integer questionId) {
         questionMapper.decreaseLikeById(questionId);
     }
+
+    public Question getQuestionById(Integer id) {
+        return questionMapper.getQuestionById(id);
+    }
 }
