@@ -52,10 +52,10 @@
     </update>
 
     <update id="increaseLikeById" parameterType="java.lang.Integer">
-        update t_question set view_count = view_count + 1 where id = #{questionId}
+        update t_question set like_count = like_count + 1 where id = #{questionId}
     </update>
 
     <update id="decreaseLikeById" parameterType="java.lang.Integer">
-        update t_question set view_count = view_count - 1 where id = #{questionId}
+        update t_question set like_count = like_count - 1 where id = #{questionId}
     </update>
 </mapper>
