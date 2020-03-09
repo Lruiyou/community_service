@@ -24,7 +24,7 @@ public class HotTopicTask {
     @Autowired
     private HandleHotissue handleHotissue;
 
-    @Scheduled(fixedRate = 1000 * 30)
+    @Scheduled(fixedRate = 1000 * 60 * 60) //一小时更新一次
     public void hotissueSchedule(){
         int offset = 0;
         int limit = 100;
@@ -33,7 +33,6 @@ public class HotTopicTask {
         Map<Integer,HotTopicDTO> questionMap = new HashMap<>();
 
         while (offset ==  0 || questionList.size() == limit){
-            System.out.println("offset:"+offset);
                 questionList = questionMapper.getQuestions(offset,limit);
                 for (Question question : questionList){
                     HotTopicDTO hotTopicDTO = new HotTopicDTO();

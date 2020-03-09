@@ -2,6 +2,7 @@ package com.alan.project.service;
 
 import com.alan.project.dao.Query;
 import com.alan.project.dao.Question;
+import com.alan.project.dao.Thumbup;
 import com.alan.project.dto.QuestionListDTO;
 import com.alan.project.entity.Page;
 import com.alan.project.mapper.QuestionMapper;
@@ -17,6 +18,7 @@ public class QuestionService {
 
     @Resource
     private QuestionMapper questionMapper;
+
 
     @Autowired
     private HandleHotissue handleHotissue;
@@ -54,28 +56,23 @@ public class QuestionService {
         return questionListDTO;
     }
 
-//    @Scheduled
-//    public List<HotTopicDTO> hotissueSchedule(){
-//        int offset = 0;
-//        int limit = 100;
-//        List<Question> questionList = new ArrayList<>();
-//        Map<Integer,Integer> priorities = new HashMap<>(); //保存问题id和计算问题的热度
-//        Map<Integer,HotTopicDTO> questionMap = new HashMap<>();
-//
-//        while (offset ==  0 || questionList.size() == limit){
-//            questionList = questionMapper.getQuestions(offset,limit);
-//            if (questionList.size() > 0){
-//                for (Question question : questionList){
-//                    HotTopicDTO hotTopicDTO = new HotTopicDTO();
-//                    Integer priority = question.getLikeCount() +  question.getCommentCount() + 1000; //计算热度
-//                    priorities.put(question.getId(),priority); //保存问题id，计算问题的热度
-//                    BeanUtils.copyProperties(question,hotTopicDTO);
-//                    hotTopicDTO.setHeat(priority);
-//                    questionMap.put(question.getId(),hotTopicDTO); //保存问题id和问题本身及问题的热度
-//                }
-//                offset += limit;
-//            }
-//        }
-//        return handleHotissue.filterHotTopic(questionMap,priorities);
-//        }
+    public Thumbup findLikeByQidandUid(Integer questionId, Integer userId) {
+       return questionMapper.findLikeByQidandUid(questionId,userId);
+    }
+
+    public void createLike(Thumbup thumbup) {
+        questionMapper.createLike(thumbup);
+    }
+
+    public void updateLike(Thumbup record) {
+        questionMapper.updateLike(record);
+    }
+
+    public void increaseLikeById(Integer questionId) {
+        questionMapper.increaseLikeById(questionId);
+    }
+
+    public void decreaseLikeById(Integer questionId) {
+        questionMapper.decreaseLikeById(questionId);
+    }
 }

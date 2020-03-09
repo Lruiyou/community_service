@@ -1,7 +1,9 @@
 package com.alan.project.controller;
 
 import com.alan.project.dao.Question;
+import com.alan.project.dao.Thumbup;
 import com.alan.project.dto.HotTopicDTO;
+import com.alan.project.dto.LikeDTO;
 import com.alan.project.dto.QuestionListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.enums.ResultCode;
@@ -22,6 +24,13 @@ public class QuestionController {
     @Autowired
     private HandleHotissue handleHotissue;
 
+    /**
+     * 获取问题列表，搜索问题
+     * @param currentPage
+     * @param pageSize
+     * @param search
+     * @return
+     */
     @GetMapping("/question")
     @ResponseBody
     public Result getQuestions(@RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
@@ -31,7 +40,18 @@ public class QuestionController {
         return Result.success(questionList);
     }
 
-
+    /**
+     * 新增问题接口
+     * @param creator
+     * @param avatar
+     * @param githubUrl
+     * @param title
+     * @param content
+     * @param htmlContent
+     * @param tag
+     * @param fileUrl
+     * @return
+     */
     @PostMapping("/question")
     @ResponseBody
     public Result createQuestion(@RequestParam(value = "creator") String creator,
@@ -89,5 +109,53 @@ public class QuestionController {
     public Result getHotTopics(){
         List<HotTopicDTO> hotTopicList = handleHotissue.getHots();
         return Result.success(hotTopicList);
+    }
+
+    /**
+     * 用户点赞或取消点赞
+     * @param questionId
+     * @param userId
+     */
+    @PutMapping("/question/thumbup")
+    public void thumbUp(@RequestParam(value = "question_id") Integer questionId,
+                          @RequestParam(value = "user_id")Integer userId){
+        Thumbup record = questionService.findLikeByQidandUid(questionId, userId);
+        if (record == null){ //第一次点赞
+            Thumbup thumbup = new Thumbup();
+            thumbup.setQuestionId(questionId);
+            thumbup.setUserId(userId);
+            thumbup.setStatus(1);
+            questionService.createLike(thumbup);
+            questionService.increaseLikeById(questionId);
+        }else if (record.getStatus() == 0){ //点赞
+            record.setStatus(1);
+            questionService.updateLike(record);
+            questionService.increaseLikeById(questionId);
+        }else { //取消点赞
+            record.setStatus(0);
+            questionService.updateLike(record);
+            questionService.decreaseLikeById(questionId);
+        }
+    }
+
+    /**
+     * 获取用户的点赞状态
+     * @param questionId
+     * @param userId
+     * @return
+     */
+    @GetMapping("/question/thumbup")
+    @ResponseBody
+    public Result getLikeState(@RequestParam(value = "question_id") Integer questionId,
+                               @RequestParam(value = "user_id")Integer userId){
+        LikeDTO likeDTO = new LikeDTO();
+        Thumbup record = questionService.findLikeByQidandUid(questionId, userId);
+        if(record == null || record.getStatus() == 0){ //未点赞状态
+            likeDTO.setStatus(0);
+            return Result.success(likeDTO);
+        }else { //点赞状态
+            likeDTO.setStatus(1);
+            return Result.success(likeDTO);
+        }
     }
 }

@@ -38,4 +38,24 @@
     <select id="getQuestions" resultType="com.alan.project.dao.Question">
         select * from t_question limit #{offset},#{limit};
     </select>
+    
+    <select id="findLikeByQidandUid" resultType="com.alan.project.dao.Thumbup">
+        select * from t_thumbup where question_id = #{questionId} and user_id = #{userId};
+    </select>
+
+    <insert id="createLike" parameterType="com.alan.project.dao.Thumbup">
+        insert into t_thumbup (question_id,user_id,status) values (#{questionId},#{userId},#{status})
+    </insert>
+
+    <update id="updateLike" parameterType="com.alan.project.dao.Thumbup">
+        update t_thumbup set status = #{status} where id = #{id}
+    </update>
+
+    <update id="increaseLikeById" parameterType="java.lang.Integer">
+        update t_question set view_count = view_count + 1 where id = #{questionId}
+    </update>
+
+    <update id="decreaseLikeById" parameterType="java.lang.Integer">
+        update t_question set view_count = view_count - 1 where id = #{questionId}
+    </update>
 </mapper>

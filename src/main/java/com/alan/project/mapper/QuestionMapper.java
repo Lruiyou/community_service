@@ -2,6 +2,7 @@ package com.alan.project.mapper;
 
 import com.alan.project.dao.Query;
 import com.alan.project.dao.Question;
+import com.alan.project.dao.Thumbup;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,14 @@ public interface QuestionMapper {
     List<Question> getQuestionList(Query query);
 
     List<Question> getQuestions(@Param("offset") int offset,@Param("limit") int limit);
+
+    Thumbup findLikeByQidandUid(@Param("questionId") Integer questionId, @Param("userId") Integer userId);
+
+    void createLike(Thumbup thumbup);
+
+    void updateLike(Thumbup record);
+
+    void increaseLikeById(@Param("questionId") Integer questionId);//点赞数加一
+
+    void decreaseLikeById(@Param("questionId") Integer questionId);//点赞数减一
 }
