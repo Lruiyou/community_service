@@ -46,7 +46,9 @@ public class QuestionController {
      * @return
      */
     @GetMapping("/question/details")
-    public Result getQuestionDetails(@RequestParam("id")Integer id){
+    @ResponseBody
+    public Result getQuestionDetails(@RequestParam("question_id")Integer id){
+        questionService.increaseViewById(id);
         Question question = questionService.getQuestionById(id);
         return  question != null ? Result.success(question) : Result.failure(ResultCode.ERROR);
     }
@@ -132,9 +134,11 @@ public class QuestionController {
      * 用户点赞或取消点赞
      * @param questionId
      * @param userId
+     * @return Result
      */
     @PutMapping("/question/thumbup")
-    public void thumbUp(@RequestParam(value = "question_id") Integer questionId,
+    @ResponseBody
+    public Result thumbUp(@RequestParam(value = "question_id") Integer questionId,
                           @RequestParam(value = "user_id")Integer userId){
         Thumbup record = questionService.findLikeByQidandUid(questionId, userId);
         if (record == null){ //第一次点赞
@@ -153,13 +157,14 @@ public class QuestionController {
             questionService.updateLike(record);
             questionService.decreaseLikeById(questionId);
         }
+        return Result.success();
     }
 
     /**
      * 获取用户的点赞状态
      * @param questionId
      * @param userId
-     * @return
+     * @return Result
      */
     @GetMapping("/question/thumbup")
     @ResponseBody

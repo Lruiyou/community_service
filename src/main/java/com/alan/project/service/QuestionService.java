@@ -79,4 +79,8 @@ public class QuestionService {
     public Question getQuestionById(Integer id) {
         return questionMapper.getQuestionById(id);
     }
+
+    public void increaseViewById(Integer id) {
+        questionMapper.increaseViewById(id);
+    }
 }
