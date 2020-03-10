@@ -3,6 +3,7 @@ package com.alan.project.enums;
 public enum ResultCode {
      SUCCESS(200,"成功"),
     TOKEN_NULL(501,"token为空"),
+    IMAGE_SIZE_ERROR(401,"上传的图片宽度和长度要小于600"),
     ERROR(400,"失败");
 
     private Integer code;

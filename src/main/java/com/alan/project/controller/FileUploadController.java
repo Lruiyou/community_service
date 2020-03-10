@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 @Controller
@@ -26,14 +28,31 @@ public class FileUploadController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("file");
         try {
-            String fileUrl = ufileService.upload(file.getInputStream(), file.getContentType(), file.getOriginalFilename());
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            int width = image.getWidth();
+            int height = image.getHeight();
+            if (width >= 600 || height >= 600){
+                return Result.failure(ResultCode.IMAGE_SIZE_ERROR);
+            }else {
+                String fileUrl = ufileService.upload(file.getInputStream(), file.getContentType(), file.getOriginalFilename());
             FileDTO fileDTO = new FileDTO();
             fileDTO.setName(file.getOriginalFilename());
             fileDTO.setUrl(fileUrl);
             return Result.success(fileDTO);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return Result.failure(ResultCode.ERROR);
         }
+//        try {
+//            String fileUrl = ufileService.upload(file.getInputStream(), file.getContentType(), file.getOriginalFilename());
+//            FileDTO fileDTO = new FileDTO();
+//            fileDTO.setName(file.getOriginalFilename());
+//            fileDTO.setUrl(fileUrl);
+//            return Result.success(fileDTO);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return Result.failure(ResultCode.ERROR);
+//        }
     }
 }
