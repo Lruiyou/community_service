@@ -47,8 +47,11 @@ public class QuestionController {
      */
     @GetMapping("/question/details")
     @ResponseBody
-    public Result getQuestionDetails(@RequestParam("question_id")Integer id){
-        questionService.increaseViewById(id);
+    public Result getQuestionDetails(@RequestParam("question_id")Integer id,
+                                    @RequestParam("type")String type){
+        if ("details".equals(type)){
+            questionService.increaseViewById(id);
+        }
         Question question = questionService.getQuestionById(id);
         return  question != null ? Result.success(question) : Result.failure(ResultCode.ERROR);
     }
