@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionService {
@@ -82,5 +85,28 @@ public class QuestionService {
 
     public void increaseViewById(Integer id) {
         questionMapper.increaseViewById(id);
+    }
+
+    public List<Question> getRelatedQuestions(Question question) {
+        if (question.getTag() == null || "".equals(question.getTag())){
+              return new ArrayList<>();
+        }
+        String tag = question.getTag();
+        String filterTag = tag.substring(1,tag.length()-1).replace("\"","");//去除[]和""
+        String[] tags = filterTag.split(",");
+        String regexTag = Arrays.stream(tags).collect(Collectors.joining("|"));
+        List<Question> questionList = questionMapper.selectRelatedByTag(question.getId(), regexTag);
+        List<Question> filterQuestionList = new ArrayList<>();
+        if (questionList.size() <= 5){
+            return questionList;
+        }else {
+            for (Question q : questionList){//当查询的数量超过5个时，只取前五个
+                filterQuestionList.add(q);
+                if (filterQuestionList.size() == 5){
+                    break;
+                }
+            }
+            return filterQuestionList;
+        }
     }
 }

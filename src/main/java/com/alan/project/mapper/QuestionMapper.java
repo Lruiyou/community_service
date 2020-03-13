@@ -36,4 +36,6 @@ public interface QuestionMapper {
     Question getQuestionById(@Param("id") Integer id);//根据问题id获取问题详情
 
     void increaseViewById(@Param("id") Integer id); //浏览数加一
+
+    List<Question> selectRelatedByTag(@Param("id") Integer id, @Param("tag") String regexTag);//查询标签相关联的问题
 }

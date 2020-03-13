@@ -66,4 +66,8 @@
     <update id="increaseViewById" parameterType="java.lang.Integer">
         update t_question set view_count = view_count + 1 where id = #{id}
     </update>
+
+    <select id="selectRelatedByTag" resultType="com.alan.project.dao.Question">
+        select * from t_question where id != #{id} and tag regexp #{tag}
+    </select>
 </mapper>

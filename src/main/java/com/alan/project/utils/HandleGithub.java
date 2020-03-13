@@ -10,6 +10,7 @@ import java.io.IOException;
 
 @Component
 public class HandleGithub {
+
     public static  String getAccessToken(AccessToken accessToken){
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(mediaType, JSON.toJSONString(accessToken));

@@ -183,4 +183,18 @@ public class QuestionController {
             return Result.success(likeDTO);
         }
     }
+
+
+    /**
+     * 根据标签获取相关问题
+     * @param questionId
+     * @return
+     */
+    @GetMapping("/question/relation")
+    @ResponseBody
+    public Result getRelatedList(@RequestParam(value = "question_id")Integer questionId){
+        Question record = questionService.getQuestionById(questionId);
+        List<Question> relatedQuestions = questionService.getRelatedQuestions(record);
+        return Result.success(relatedQuestions);
+    }
 }
