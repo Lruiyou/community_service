@@ -38,4 +38,6 @@ public interface QuestionMapper {
     void increaseViewById(@Param("id") Integer id); //浏览数加一
 
     List<Question> selectRelatedByTag(@Param("id") Integer id, @Param("tag") String regexTag);//查询标签相关联的问题
+
+    void increaseCommentById(@Param("questionId") Integer topicId);//评论数加一
 }

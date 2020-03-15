@@ -70,7 +70,7 @@ public class QuestionController {
      */
     @PostMapping("/question")
     @ResponseBody
-    public Result createQuestion(@RequestParam(value = "creator") String creator,
+    public Result createQuestion(@RequestParam(value = "creator") Integer creator,
                                  @RequestParam(value = "creator_name") String creatorName,
                                  @RequestParam(value = "avatar") String avatar,
                                  @RequestParam(value = "github_url") String githubUrl,
@@ -80,7 +80,7 @@ public class QuestionController {
                                  @RequestParam(value = "tag") String tag,
                                  @RequestParam(value = "file_url") String fileUrl){
         Question question = new Question();
-        question.setCreator(creator);
+        question.setCreatorId(creator);
         question.setCreatorName(creatorName);
         question.setAvatar(avatar);
         question.setGithubUrl(githubUrl);

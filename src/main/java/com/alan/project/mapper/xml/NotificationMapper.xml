@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alan.project.mapper.NotificationMapper">
+    <insert id="insertNotification" parameterType="com.alan.project.dao.Notification">
+        insert into t_notification (notifier,receiver,outerId,type,create_time,status,notifier_name,outer_title)
+        values (#{notifier},#{receiver},#{outerId},#{type},#{createTime},#{status},#{notifierName},#{outerTitle});
+    </insert>
+</mapper>
