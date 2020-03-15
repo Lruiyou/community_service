@@ -7,4 +7,17 @@
         insert into t_comment (topic_id,from_uid,content,create_time,from_name,from_avatar)
         values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar})
     </insert>
+
+    <select id="getComments" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Comment">
+        select
+    </select>
+
+
+    <select id="commentCountsById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from t_comment where topic_id = #{questionId}
+    </select>
+
+    <select id="getCommentList" parameterType="com.alan.project.dao.CommentPagination" resultType="com.alan.project.dao.Comment">
+        select * from t_comment where topic_id = #{questionId} order by create_time desc limit #{offset},#{size}
+    </select>
 </mapper>

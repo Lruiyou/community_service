@@ -36,7 +36,6 @@ public class QuestionService {
     }
 
     public QuestionListDTO getQuestionList(Integer currentPage, Integer pageSize, String search) {
-        Integer totalPage;
         Query query = new Query();
         if (search != null){
             query.setSearch(search.trim());

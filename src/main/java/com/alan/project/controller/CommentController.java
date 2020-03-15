@@ -1,15 +1,14 @@
 package com.alan.project.controller;
 
 import com.alan.project.dao.Comment;
+import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.CommentRequestBody;
 import com.alan.project.service.CommentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CommentController {
@@ -29,5 +28,21 @@ public class CommentController {
         BeanUtils.copyProperties(commentRequestBody,comment);
         comment.setCreateTime(System.currentTimeMillis());
         return commentService.createComment(comment);
+    }
+
+    /**
+     * 获取评论列表接口
+     * @param questionId
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/comment")
+    @ResponseBody
+    public Result getCommentList(@RequestParam("question_id")Integer questionId,
+                                 @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
+                                 @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+        CommentListDTO commentListDTO = commentService.getComments(questionId, currentPage, pageSize);
+        return Result.success(commentListDTO);
     }
 }

@@ -1,9 +1,12 @@
 package com.alan.project.service;
 
 import com.alan.project.dao.Comment;
+import com.alan.project.dao.CommentPagination;
 import com.alan.project.dao.Notification;
 import com.alan.project.dao.Question;
+import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
+import com.alan.project.entity.Page;
 import com.alan.project.enums.NotificationStatus;
 import com.alan.project.enums.NotificationType;
 import com.alan.project.enums.ResultCode;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -55,5 +59,26 @@ public class CommentService {
         notification.setType(notificationType.getType());
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
         notificationMapper.insertNotification(notification);
+    }
+
+    public CommentListDTO getComments(Integer questionId, Integer currentPage, Integer pageSize) {
+        //获取问题下的所属评论总数
+        Integer totalCount = commentMapper.commentCountsById(questionId);
+        //计算偏移量
+        Integer offset = pageSize * (currentPage - 1);
+        CommentPagination commentPagination = new CommentPagination();
+        commentPagination.setQuestionId(questionId);
+        commentPagination.setOffset(offset);
+        commentPagination.setSize(pageSize);
+        Page page = new Page();
+        page.setCurrentPage(currentPage);
+        page.setPageSize(pageSize);
+        page.setTotal(totalCount);
+        //根据时间倒序查询
+        List<Comment> commentList = commentMapper.getCommentList(commentPagination);
+        CommentListDTO commentListDTO = new CommentListDTO();
+        commentListDTO.setComments(commentList);
+        commentListDTO.setPage(page);
+        return  commentListDTO;
     }
 }
