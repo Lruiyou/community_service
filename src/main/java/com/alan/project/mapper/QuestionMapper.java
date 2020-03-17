@@ -39,5 +39,5 @@ public interface QuestionMapper {
 
     List<Question> selectRelatedByTag(@Param("id") Integer id, @Param("tag") String regexTag);//查询标签相关联的问题
 
-    void increaseCommentById(@Param("questionId") Integer topicId);//评论数加一
+    void increaseCommentCountById(@Param("questionId") Integer topicId);//评论数加一
 }

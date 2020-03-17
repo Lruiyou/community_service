@@ -8,8 +8,8 @@
         values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar})
     </insert>
 
-    <select id="getComments" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Comment">
-        select
+    <select id="getCommentById" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Comment">
+        select * from t_comment where id = #{id}
     </select>
 
 
@@ -20,4 +20,8 @@
     <select id="getCommentList" parameterType="com.alan.project.dao.CommentPagination" resultType="com.alan.project.dao.Comment">
         select * from t_comment where topic_id = #{questionId} order by create_time desc limit #{offset},#{size}
     </select>
+
+    <update id="increaseReplyCountById" parameterType="java.lang.Long">
+        update t_comment set reply_count = reply_count + 1 where id = #{id}
+    </update>
 </mapper>

@@ -71,7 +71,7 @@
         select * from t_question where id != #{id} and tag regexp #{tag}
     </select>
 
-    <update id="increaseCommentById" parameterType="java.lang.Integer">
+    <update id="increaseCommentCountById" parameterType="java.lang.Integer">
         update t_question set comment_count = comment_count + 1 where id = #{questionId}
     </update>
 </mapper>

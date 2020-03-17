@@ -12,12 +12,13 @@ public interface CommentMapper {
 
     void insertComment(Comment comment);
 
-    List<Comment> getComments(Integer questionId);
 
-    void getCommentsById();
+    Comment getCommentById(@Param("id") Long id);
 
     Integer commentCountsById(@Param("questionId") Integer questionId);
 
 
     List<Comment> getCommentList(CommentPagination commentPagination);
+
+    void increaseReplyCountById(@Param("id") Long id);
 }

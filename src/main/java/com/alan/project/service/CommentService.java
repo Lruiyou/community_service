@@ -38,26 +38,28 @@ public class CommentService {
             return Result.failure(ResultCode.QUESTION_NOT_EXIT); //问题不存在
         }else {
             commentMapper.insertComment(comment);
-            questionMapper.increaseCommentById(comment.getTopicId());
+            questionMapper.increaseCommentCountById(comment.getTopicId());
             //创建通知
             createNotification(comment,question.getCreatorId(),question.getTitle(), NotificationType.REPLY_QUESTION,question.getId());
             return Result.success();
         }
     }
 
-    private void createNotification(Comment comment, Integer receiver, String outerTitle, NotificationType notificationType, Integer outerId) {
-        if (receiver == comment.getFromUid()){ //回复自己提的问题，不产生通知
+    private void createNotification(Comment comment, Integer receiverId, String outerTitle, NotificationType notificationType, Integer outerId) {
+        if (receiverId == comment.getFromUid()){ //回复自己提的问题，不产生通知
             return;
         }
         Notification notification = new Notification();
-        notification.setCreateTime(System.currentTimeMillis());
-        notification.setNotifier(comment.getFromUid());
+        notification.setNotifierId(comment.getFromUid());
         notification.setNotifierName(comment.getFromName());
-        notification.setReceiver(receiver);
+        notification.setNotifierAvatar(comment.getFromAvatar());
+        notification.setReceiverId(receiverId);
         notification.setOuterId(outerId);
         notification.setOuterTitle(outerTitle);
         notification.setType(notificationType.getType());
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
+        notification.setContent(comment.getContent());
+        notification.setCreateTime(System.currentTimeMillis());
         notificationMapper.insertNotification(notification);
     }
 
@@ -80,5 +82,9 @@ public class CommentService {
         commentListDTO.setComments(commentList);
         commentListDTO.setPage(page);
         return  commentListDTO;
+    }
+
+    public Comment getCommentById(Long commentId) {
+       return commentMapper.getCommentById(commentId);
     }
 }
