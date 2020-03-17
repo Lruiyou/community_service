@@ -4,6 +4,7 @@ import com.alan.project.dao.Comment;
 import com.alan.project.dao.CommentPagination;
 import com.alan.project.dao.Notification;
 import com.alan.project.dao.Question;
+import com.alan.project.dto.CommentDTO;
 import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.Page;
@@ -13,10 +14,12 @@ import com.alan.project.enums.ResultCode;
 import com.alan.project.mapper.CommentMapper;
 import com.alan.project.mapper.NotificationMapper;
 import com.alan.project.mapper.QuestionMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -78,8 +81,14 @@ public class CommentService {
         page.setTotal(totalCount);
         //根据时间倒序查询
         List<Comment> commentList = commentMapper.getCommentList(commentPagination);
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (Comment c : commentList){
+            CommentDTO commentDTO = new CommentDTO();
+            BeanUtils.copyProperties(c,commentDTO);
+            commentDTOList.add(commentDTO);
+        }
         CommentListDTO commentListDTO = new CommentListDTO();
-        commentListDTO.setComments(commentList);
+        commentListDTO.setComments(commentDTOList);
         commentListDTO.setPage(page);
         return  commentListDTO;
     }

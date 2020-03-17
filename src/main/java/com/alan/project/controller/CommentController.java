@@ -41,7 +41,7 @@ public class CommentController {
     @ResponseBody
     public Result getCommentList(@RequestParam("question_id")Integer questionId,
                                  @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
-                                 @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
+                                 @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         CommentListDTO commentListDTO = commentService.getComments(questionId, currentPage, pageSize);
         return Result.success(commentListDTO);
     }

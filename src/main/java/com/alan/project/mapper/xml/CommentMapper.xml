@@ -8,7 +8,7 @@
         values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar})
     </insert>
 
-    <select id="getCommentById" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Comment">
+    <select id="getCommentById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Comment">
         select * from t_comment where id = #{id}
     </select>
 
