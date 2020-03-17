@@ -1,10 +1,9 @@
 package com.alan.project.service;
 
-import com.alan.project.dao.Comment;
-import com.alan.project.dao.Notification;
-import com.alan.project.dao.Question;
-import com.alan.project.dao.Reply;
+import com.alan.project.dao.*;
+import com.alan.project.dto.ReplyListDTO;
 import com.alan.project.dto.Result;
+import com.alan.project.entity.Page;
 import com.alan.project.enums.NotificationStatus;
 import com.alan.project.enums.NotificationType;
 import com.alan.project.enums.ResultCode;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class ReplyService {
@@ -65,5 +65,28 @@ public class ReplyService {
         notification.setContent(reply.getContent());
         notification.setCreateTime(System.currentTimeMillis());
         notificationMapper.insertNotification(notification);
+    }
+
+    @Transactional
+    public Result getReplyList(Long commentId, Integer currentPage, Integer pageSize) {
+        //获取评论下的所属回复总数
+        Integer totalCount = replyMapper.getReplyCountsById(commentId);
+        //计算偏移量
+        Integer offset = pageSize * (currentPage - 1);
+        ReplyPagination replyPagination = new ReplyPagination();
+        replyPagination.setCommentId(commentId);
+        replyPagination.setOffset(offset);
+        replyPagination.setSize(pageSize);
+        Page page = new Page();
+        page.setCurrentPage(currentPage);
+        page.setPageSize(pageSize);
+        page.setTotal(totalCount);
+
+        List<Reply> replyList = replyMapper.getReplyList(replyPagination);
+
+        ReplyListDTO replyListDTO = new ReplyListDTO();
+        replyListDTO.setReplies(replyList);
+        replyListDTO.setPage(page);
+        return Result.success(replyListDTO);
     }
 }
