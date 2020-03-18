@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alan.project.mapper.CommentMapper">
-    <insert id="insertComment" parameterType="com.alan.project.dao.Comment">
+    <insert id="insertComment" parameterType="com.alan.project.dao.Comment"  useGeneratedKeys="true" keyProperty="id">
         insert into t_comment (topic_id,from_uid,content,create_time,from_name,from_avatar)
         values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar})
     </insert>

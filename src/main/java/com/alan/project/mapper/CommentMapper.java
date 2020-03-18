@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    void insertComment(Comment comment);
+    Long insertComment(Comment comment);
 
 
     Comment getCommentById(@Param("id") Long id);

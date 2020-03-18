@@ -44,7 +44,9 @@ public class CommentService {
             questionMapper.increaseCommentCountById(comment.getTopicId());
             //创建通知
             createNotification(comment,question.getCreatorId(),question.getTitle(), NotificationType.REPLY_QUESTION,question.getId());
-            return Result.success();
+            CommentDTO commentDTO = new CommentDTO();
+            BeanUtils.copyProperties(comment,commentDTO);
+            return Result.success(commentDTO);
         }
     }
 
