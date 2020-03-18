@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ReplyMapper {
 
-    void insertReply(Reply reply);
+    Long insertReply(Reply reply);
 
     Integer getReplyCountsById(@Param("id") Long commentId);
 

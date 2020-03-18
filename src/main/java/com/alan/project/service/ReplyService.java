@@ -45,7 +45,7 @@ public class ReplyService {
             commentMapper.increaseReplyCountById(reply.getCommentId());//回复数加一
             //创建通知
             createNotification(reply,question);
-            return Result.success();
+            return Result.success(reply);
         }
     }
 
@@ -78,9 +78,13 @@ public class ReplyService {
         replyPagination.setOffset(offset);
         replyPagination.setSize(pageSize);
         Page page = new Page();
-        page.setCurrentPage(currentPage);
-        page.setPageSize(pageSize);
-        page.setTotal(totalCount);
+        if(totalCount > 0){
+            page.setCurrentPage(currentPage);
+            page.setPageSize(pageSize);
+            page.setTotal(totalCount);
+        }else {
+            page = null;
+        }
 
         List<Reply> replyList = replyMapper.getReplyList(replyPagination);
 

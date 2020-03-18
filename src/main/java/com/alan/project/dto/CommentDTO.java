@@ -1,10 +1,6 @@
 package com.alan.project.dto;
 
-import com.alan.project.dao.Reply;
 import lombok.Data;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 public class CommentDTO {
@@ -16,5 +12,5 @@ public class CommentDTO {
     private  String fromName;
     private String fromAvatar;
     private Integer replyCount;
-    private List<Reply> replies = new ArrayList<>();
+    private ReplyDTO reply = new ReplyDTO();
 }
