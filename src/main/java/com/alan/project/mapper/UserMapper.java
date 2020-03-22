@@ -13,4 +13,6 @@ public interface UserMapper {
     User findUserByAccountId(@Param("accountId") String accountId);
 
     void updateUser(User u);
+
+    User findUserById(@Param("id") Integer id);
 }

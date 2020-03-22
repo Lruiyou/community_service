@@ -13,8 +13,8 @@ public class NotificationService {
     @Resource
     private NotificationMapper notificationMapper;
 
-    public List<Notification> getUnreadNotifications(Integer uid, int status) {
-        return notificationMapper.getUnreadNotifications(uid,status);
+    public List<Notification> getUnreadNotifications(Integer uid) {
+        return notificationMapper.getUnreadNotifications(uid);
     }
 
     public Integer getUnreadCounts(Integer uid, int status) {

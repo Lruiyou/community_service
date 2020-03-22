@@ -9,7 +9,7 @@
     </insert>
 
     <select id="getUnreadNotifications" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Notification">
-        select * from t_notification where receiver_id = #{uid} and status = #{status}
+        select * from t_notification where receiver_id = #{uid}
     </select>
 
     <select id="getUnreadCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">

@@ -56,6 +56,7 @@ public class CommentService {
         }
         Notification notification = new Notification();
         notification.setCommentId(comment.getId());
+        notification.setReplyId(comment.getId());
         notification.setNotifierId(comment.getFromUid());
         notification.setNotifierName(comment.getFromName());
         notification.setNotifierAvatar(comment.getFromAvatar());
