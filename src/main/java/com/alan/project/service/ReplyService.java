@@ -54,13 +54,15 @@ public class ReplyService {
             return;
         }
         Notification notification = new Notification();
+        notification.setCommentId(reply.getCommentId());
+        notification.setReplyId(reply.getReplyId());
         notification.setNotifierId(reply.getFromUid());
         notification.setNotifierName(reply.getFromName());
         notification.setNotifierAvatar(reply.getFromAvatar());
         notification.setReceiverId(reply.getToUid());
         notification.setOuterId(reply.getTopicId());
         notification.setOuterTitle(question.getTitle());
-        notification.setType(NotificationType.REPLY_COMMENT.getType());
+        notification.setType(NotificationType.COMMENT.getType());
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
         notification.setContent(reply.getContent());
         notification.setCreateTime(System.currentTimeMillis());

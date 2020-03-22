@@ -4,7 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alan.project.mapper.NotificationMapper">
     <insert id="insertNotification" parameterType="com.alan.project.dao.Notification">
-        insert into t_notification (notifier_id,notifier_name,notifier_avatar,receiver_id,outer_id,outer_title,type,status,content,create_time)
-        values (#{notifierId},#{notifierName},#{notifierAvatar},#{receiverId},#{outerId},#{outerTitle},#{type},#{status},#{content},#{createTime});
+        insert into t_notification (comment_id,reply_id,notifier_id,notifier_name,notifier_avatar,receiver_id,outer_id,outer_title,type,status,content,create_time)
+        values (#{commentId},#{replyId},#{notifierId},#{notifierName},#{notifierAvatar},#{receiverId},#{outerId},#{outerTitle},#{type},#{status},#{content},#{createTime});
     </insert>
+
+    <select id="getUnreadNotifications" parameterType="java.lang.Integer" resultType="com.alan.project.dao.Notification">
+        select * from t_notification where receiver_id = #{uid} and status = #{status}
+    </select>
+
+    <select id="getUnreadCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from t_notification where receiver_id = #{uid} and status = #{status}
+    </select>
 </mapper>

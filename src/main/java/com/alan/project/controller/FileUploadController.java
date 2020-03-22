@@ -44,15 +44,5 @@ public class FileUploadController {
             e.printStackTrace();
             return Result.failure(ResultCode.ERROR);
         }
-//        try {
-//            String fileUrl = ufileService.upload(file.getInputStream(), file.getContentType(), file.getOriginalFilename());
-//            FileDTO fileDTO = new FileDTO();
-//            fileDTO.setName(file.getOriginalFilename());
-//            fileDTO.setUrl(fileUrl);
-//            return Result.success(fileDTO);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return Result.failure(ResultCode.ERROR);
-//        }
     }
 }

@@ -43,7 +43,7 @@ public class CommentService {
             commentMapper.insertComment(comment);
             questionMapper.increaseCommentCountById(comment.getTopicId());
             //创建通知
-            createNotification(comment,question.getCreatorId(),question.getTitle(), NotificationType.REPLY_QUESTION,question.getId());
+            createNotification(comment,question.getCreatorId(),question.getTitle(), NotificationType.QUESTION,question.getId());
             CommentDTO commentDTO = new CommentDTO();
             BeanUtils.copyProperties(comment,commentDTO);
             return Result.success(commentDTO);
@@ -55,6 +55,7 @@ public class CommentService {
             return;
         }
         Notification notification = new Notification();
+        notification.setCommentId(comment.getId());
         notification.setNotifierId(comment.getFromUid());
         notification.setNotifierName(comment.getFromName());
         notification.setNotifierAvatar(comment.getFromAvatar());

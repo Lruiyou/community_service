@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class Notification {
     private Integer id;
+    private Long commentId;
+    private Long replyId;
     private Integer notifierId;
     private String notifierName;
     private String notifierAvatar;
