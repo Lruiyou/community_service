@@ -7,6 +7,7 @@ public class Notification {
     private Integer id;
     private Long commentId;
     private Long replyId;
+    private Long parentId;
     private Integer notifierId;
     private String notifierName;
     private String notifierAvatar;

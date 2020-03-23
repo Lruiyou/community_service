@@ -23,6 +23,18 @@ public class NotificationController {
     private UserService userService;
 
     /**
+     * 将未读的消息状态设置成已读
+     * @param uid
+     * @return
+     */
+    @PutMapping("/notification/status")
+    @ResponseBody
+    public Result updateNotificationStatus(@RequestParam("uid")Integer uid){
+        notificationService.updateNotificationStatus(uid,NotificationStatus.UNREAD.getStatus());
+        return Result.success();
+    }
+
+    /**
      * 通过用户id获取还没查看的消息总数
      * @return
      */
@@ -48,7 +60,7 @@ public class NotificationController {
             return Result.failure(ResultCode.USER_NOT_EXIT);
         }
         //获取用户还没看的通知
-        List<Notification> notifications = notificationService.getUnreadNotifications(uid);
+        List<Notification> notifications = notificationService.getNotifications(uid,currentPage,pageSize);
         return Result.success(notifications);
     }
 

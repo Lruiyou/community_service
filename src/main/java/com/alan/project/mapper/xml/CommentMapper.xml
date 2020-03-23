@@ -24,4 +24,8 @@
     <update id="increaseReplyCountById" parameterType="java.lang.Long">
         update t_comment set reply_count = reply_count + 1 where id = #{id}
     </update>
+
+    <select id="findCommentById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Comment">
+        select * from t_comment where id = #{id}
+    </select>
 </mapper>

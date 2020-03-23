@@ -55,7 +55,8 @@ public class ReplyService {
         }
         Notification notification = new Notification();
         notification.setCommentId(reply.getCommentId());
-        notification.setReplyId(reply.getReplyId());
+        notification.setReplyId(reply.getId());
+        notification.setParentId(reply.getReplyId());
         notification.setNotifierId(reply.getFromUid());
         notification.setNotifierName(reply.getFromName());
         notification.setNotifierAvatar(reply.getFromAvatar());
@@ -94,5 +95,9 @@ public class ReplyService {
         replyListDTO.setReplies(replyList);
         replyListDTO.setPage(page);
         return Result.success(replyListDTO);
+    }
+
+    public Reply findReplyById(Long id) {
+        return replyMapper.findReplyById(id);
     }
 }

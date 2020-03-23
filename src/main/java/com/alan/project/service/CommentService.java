@@ -100,4 +100,8 @@ public class CommentService {
     public Comment getCommentById(Long commentId) {
        return commentMapper.getCommentById(commentId);
     }
+
+    public Comment findCommentById(Long id) {
+       return  commentMapper.findCommentById(id);
+    }
 }

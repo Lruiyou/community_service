@@ -4,6 +4,7 @@ import com.alan.project.dao.Comment;
 import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.CommentRequestBody;
+import com.alan.project.enums.ResultCode;
 import com.alan.project.service.CommentService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,13 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @GetMapping("/comment/selectOne")
+    @ResponseBody
+    public Result findComment(@RequestParam("id")Long id){
+        Comment dbComment = commentService.findCommentById(id);
+        return dbComment == null ? Result.failure(ResultCode.COMMENT_NOT_EXIT) : Result.success(dbComment) ;
+    }
 
     /**
      * 新增评论接口

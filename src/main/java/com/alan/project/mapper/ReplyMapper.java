@@ -15,4 +15,6 @@ public interface ReplyMapper {
     Integer getReplyCountsById(@Param("id") Long commentId);
 
     List<Reply> getReplyList(ReplyPagination replyPagination);
+
+    Reply findReplyById(@Param("id") Long id);
 }

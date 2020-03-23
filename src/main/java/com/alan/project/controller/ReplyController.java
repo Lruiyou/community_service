@@ -3,6 +3,7 @@ package com.alan.project.controller;
 import com.alan.project.dao.Reply;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.ReplyRequestBody;
+import com.alan.project.enums.ResultCode;
 import com.alan.project.service.ReplyService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,12 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
-
+    @GetMapping("/reply/selectOne")
+    @ResponseBody
+    public Result findReply(@RequestParam("id")Long id){
+        Reply dbReply = replyService.findReplyById(id);
+        return dbReply == null ? Result.failure(ResultCode.COMMENT_NOT_EXIT) : Result.success(dbReply);
+    }
     /**
      * 增加回复接口
      * @param requestBody

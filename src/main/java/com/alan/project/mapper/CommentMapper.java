@@ -21,4 +21,6 @@ public interface CommentMapper {
     List<Comment> getCommentList(CommentPagination commentPagination);
 
     void increaseReplyCountById(@Param("id") Long id);
+
+    Comment findCommentById(@Param("id") Long id);
 }
