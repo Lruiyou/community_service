@@ -17,4 +17,6 @@ public interface NotificationMapper {
     Integer getUnreadCounts(@Param("uid") Integer uid,@Param("status") int status);
 
     void updateNotificationStatus(@Param("uid") Integer uid,@Param("status") int status);
+
+    Integer getTotalByUid(@Param("uid") Integer uid);
 }

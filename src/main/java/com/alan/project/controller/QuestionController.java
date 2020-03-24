@@ -98,10 +98,21 @@ public class QuestionController {
         }
     }
 
-    @PutMapping("/question")
+    /**
+     * 编辑问题
+     * Putmapping不支持@RequestBody
+     * @param id
+     * @param title
+     * @param content
+     * @param htmlContent
+     * @param tag
+     * @param fileUrl
+     * @return
+     */
+    @PutMapping("/question/edit")
     @ResponseBody
     public Result editQuestion(@RequestParam(value = "id") Integer id,
-                                @RequestParam(value = "title") String title,
+                               @RequestParam(value = "title") String title,
                                @RequestParam(value = "content") String content,
                                @RequestParam(value = "html_content") String htmlContent,
                                @RequestParam(value = "tag") String tag,
@@ -114,12 +125,8 @@ public class QuestionController {
         question.setTag(tag);
         question.setFileUrl(fileUrl);
         question.setModified(System.currentTimeMillis());
-        Boolean sqlResult = questionService.updateQuestionById(question);
-        if (sqlResult){
-            return Result.success();
-        }else {
-            return Result.failure(ResultCode.ERROR);
-        }
+        questionService.updateQuestionById(question);
+        return Result.success();
     }
 
     /**

@@ -31,8 +31,8 @@ public class QuestionService {
         return questionMapper.createQuestion(question);
     }
 
-    public Boolean updateQuestionById(Question question) {
-        return questionMapper.updateQuestionById(question);
+    public void updateQuestionById(Question question) {
+         questionMapper.updateQuestionById(question);
     }
 
     public QuestionListDTO getQuestionList(Integer currentPage, Integer pageSize, String search) {

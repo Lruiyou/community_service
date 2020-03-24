@@ -15,7 +15,7 @@ public interface QuestionMapper {
 
     Question getQuestionByCreator(@Param("creator") String creator);
 
-    boolean updateQuestionById(Question question);
+    void updateQuestionById(Question question);
 
     Integer questionCounts(Query query);
 

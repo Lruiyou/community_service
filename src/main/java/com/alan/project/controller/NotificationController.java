@@ -1,7 +1,7 @@
 package com.alan.project.controller;
 
-import com.alan.project.dao.Notification;
 import com.alan.project.dao.User;
+import com.alan.project.dto.NotificationDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.enums.NotificationStatus;
 import com.alan.project.enums.ResultCode;
@@ -9,9 +9,10 @@ import com.alan.project.service.NotificationService;
 import com.alan.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class NotificationController {
@@ -60,8 +61,8 @@ public class NotificationController {
             return Result.failure(ResultCode.USER_NOT_EXIT);
         }
         //获取用户还没看的通知
-        List<Notification> notifications = notificationService.getNotifications(uid,currentPage,pageSize);
-        return Result.success(notifications);
+        NotificationDTO result = notificationService.getNotifications(uid,currentPage,pageSize);
+        return Result.success(result);
     }
 
 

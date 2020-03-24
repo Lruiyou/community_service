@@ -19,4 +19,8 @@
     <update id="updateNotificationStatus" parameterType="java.lang.Integer">
         update t_notification set status = 1 where receiver_id = #{uid} and status = #{status}
     </update>
+
+    <select id="getTotalByUid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from t_notification where receiver_id = #{uid}
+    </select>
  </mapper>
