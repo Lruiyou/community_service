@@ -1,7 +1,7 @@
 package com.alan.project.mapper;
 
+import com.alan.project.dao.Pagination;
 import com.alan.project.dao.Reply;
-import com.alan.project.dao.ReplyPagination;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +14,7 @@ public interface ReplyMapper {
 
     Integer getReplyCountsById(@Param("id") Long commentId);
 
-    List<Reply> getReplyList(ReplyPagination replyPagination);
+    List<Reply> getReplyList(Pagination replyPagination);
 
     Reply findReplyById(@Param("id") Long id);
 }

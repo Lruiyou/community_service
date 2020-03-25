@@ -1,7 +1,7 @@
 package com.alan.project.mapper;
 
 import com.alan.project.dao.Notification;
-import com.alan.project.dao.NotificationPagination;
+import com.alan.project.dao.Pagination;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,11 +12,11 @@ public interface NotificationMapper {
 
     void insertNotification(Notification notification);
 
-    List<Notification> getNotifications(NotificationPagination pagination);
+    List<Notification> getNotifications(Pagination pagination);
 
-    Integer getUnreadCounts(@Param("uid") Integer uid,@Param("status") int status);
+    Integer getUnreadCounts(@Param("uid") String uid,@Param("status") int status);
 
-    void updateNotificationStatus(@Param("uid") Integer uid,@Param("status") int status);
+    void updateNotificationStatus(@Param("uid") String uid,@Param("status") int status);
 
-    Integer getTotalByUid(@Param("uid") Integer uid);
+    Integer getTotalByUid(@Param("uid") String uid);
 }

@@ -17,8 +17,8 @@
         select count(*) from t_comment where topic_id = #{questionId}
     </select>
 
-    <select id="getCommentList" parameterType="com.alan.project.dao.CommentPagination" resultType="com.alan.project.dao.Comment">
-        select * from t_comment where topic_id = #{questionId} order by create_time desc limit #{offset},#{size}
+    <select id="getCommentList" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Comment">
+        select * from t_comment where topic_id = #{id} order by create_time desc limit #{offset},#{size}
     </select>
 
     <update id="increaseReplyCountById" parameterType="java.lang.Long">

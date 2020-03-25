@@ -8,19 +8,19 @@
         values (#{commentId},#{replyId},#{parentId},#{notifierId},#{notifierName},#{notifierAvatar},#{receiverId},#{outerId},#{outerTitle},#{type},#{status},#{content},#{createTime});
     </insert>
 
-    <select id="getNotifications" parameterType="com.alan.project.dao.NotificationPagination" resultType="com.alan.project.dao.Notification">
-        select * from t_notification where receiver_id = #{uid} order by create_time desc limit #{offset},#{size}
+    <select id="getNotifications" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Notification">
+        select * from t_notification where receiver_id = #{id} order by create_time desc limit #{offset},#{size}
     </select>
 
-    <select id="getUnreadCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getUnreadCounts" resultType="java.lang.Integer">
         select count(*) from t_notification where receiver_id = #{uid} and status = #{status}
     </select>
 
-    <update id="updateNotificationStatus" parameterType="java.lang.Integer">
+    <update id="updateNotificationStatus" >
         update t_notification set status = 1 where receiver_id = #{uid} and status = #{status}
     </update>
 
-    <select id="getTotalByUid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="getTotalByUid" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*) from t_notification where receiver_id = #{uid}
     </select>
  </mapper>

@@ -19,7 +19,4 @@
         update t_user set token = #{token},name = #{name},modified = #{modified},avatar_url = #{avatarUrl} where id = #{id}
     </update>
 
-    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.alan.project.dao.User">
-        select * from t_user where id = #{id};
-    </select>
 </mapper>

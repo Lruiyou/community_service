@@ -30,7 +30,7 @@ public class NotificationController {
      */
     @PutMapping("/notification/status")
     @ResponseBody
-    public Result updateNotificationStatus(@RequestParam("uid")Integer uid){
+    public Result updateNotificationStatus(@RequestParam("uid")String uid){
         notificationService.updateNotificationStatus(uid,NotificationStatus.UNREAD.getStatus());
         return Result.success();
     }
@@ -41,7 +41,7 @@ public class NotificationController {
      */
     @GetMapping("/notification/unread/counts")
     @ResponseBody
-    public Result getNotificationCounts(@RequestParam("uid")Integer uid){
+    public Result getNotificationCounts(@RequestParam("uid")String uid){
         Integer unreadCounts = notificationService.getUnreadCounts(uid, NotificationStatus.UNREAD.getStatus());
         return Result.success(unreadCounts);
     }
@@ -53,10 +53,10 @@ public class NotificationController {
      */
     @GetMapping("/notification/unread/list")
     @ResponseBody
-    public Result getUnreadNotifications(@RequestParam("uid")Integer uid,
+    public Result getUnreadNotifications(@RequestParam("uid")String uid,
                                          @RequestParam(value = "currentPage",defaultValue = "1")Integer currentPage,
                                          @RequestParam(value = "pageSize",defaultValue = "5")Integer pageSize){
-        User user = userService.findUserById(uid);
+        User user = userService.findUserByAccountId(uid);
         if (user == null){
             return Result.failure(ResultCode.USER_NOT_EXIT);
         }

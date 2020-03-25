@@ -1,7 +1,7 @@
 package com.alan.project.service;
 
 import com.alan.project.dao.Notification;
-import com.alan.project.dao.NotificationPagination;
+import com.alan.project.dao.Pagination;
 import com.alan.project.dto.NotificationDTO;
 import com.alan.project.entity.Page;
 import com.alan.project.mapper.NotificationMapper;
@@ -16,7 +16,7 @@ public class NotificationService {
     @Resource
     private NotificationMapper notificationMapper;
 
-    public NotificationDTO getNotifications( Integer uid,Integer currentPage, Integer pageSize) {
+    public NotificationDTO getNotifications( String uid,Integer currentPage, Integer pageSize) {
         Integer totalPage;
         boolean more;
         Integer totalCount = notificationMapper.getTotalByUid(uid);
@@ -34,8 +34,8 @@ public class NotificationService {
         page.setCurrentPage(currentPage);
         page.setPageSize(pageSize);
         page.setMore(more);
-        NotificationPagination pagination = new NotificationPagination();
-        pagination.setUid(uid);
+        Pagination<String> pagination = new Pagination<>();
+        pagination.setId(uid);
         pagination.setOffset(offset);
         pagination.setSize(pageSize);
         List<Notification> notificationList = notificationMapper.getNotifications(pagination);
@@ -45,11 +45,11 @@ public class NotificationService {
         return notificationDTO;
     }
 
-    public Integer getUnreadCounts(Integer uid, int status) {
+    public Integer getUnreadCounts(String uid, int status) {
         return notificationMapper.getUnreadCounts(uid,status);
     }
 
-    public void updateNotificationStatus(Integer uid, int status) {
+    public void updateNotificationStatus(String uid, int status) {
         notificationMapper.updateNotificationStatus(uid,status);
     }
 }

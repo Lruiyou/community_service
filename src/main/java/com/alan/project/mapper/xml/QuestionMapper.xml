@@ -8,9 +8,6 @@
         values (#{creatorId},#{creatorName},#{avatar},#{githubUrl},#{title},#{content},#{htmlContent},#{tag},#{fileUrl},#{createTime},#{modified})
     </insert>
 
-    <select id="getQuestionByCreator" parameterType="String" resultType="com.alan.project.dao.Question">
-        select * from t_question where creator = #{creator};
-    </select>
 
     <select id="questionCounts" parameterType="com.alan.project.dao.Query" resultType="java.lang.Integer">
         select count(*) from t_question
@@ -32,7 +29,7 @@
     </select>
 
     <update id="updateQuestionById" parameterType="com.alan.project.dao.Question" >
-        update t_question set title = #{title}, content = #{content} ,html_content = #{htmlContent},tag = #{tag},file_url = #{fileUrl} where id = #{id}
+        update t_question set title = #{title}, content = #{content} ,html_content = #{htmlContent},tag = #{tag},file_url = #{fileUrl},modified = #{modified} where id = #{id}
     </update>
 
     <select id="getQuestions" resultType="com.alan.project.dao.Question">
@@ -74,4 +71,8 @@
     <update id="increaseCommentCountById" parameterType="java.lang.Integer">
         update t_question set comment_count = comment_count + 1 where id = #{questionId}
     </update>
+
+    <select id="getQuestionListByUid"  parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Question">
+        select * from t_question where creator_id = #{id} order by create_time desc limit #{offset},#{size}
+    </select>
 </mapper>

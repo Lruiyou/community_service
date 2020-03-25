@@ -1,8 +1,8 @@
 package com.alan.project.service;
 
 import com.alan.project.dao.Comment;
-import com.alan.project.dao.CommentPagination;
 import com.alan.project.dao.Notification;
+import com.alan.project.dao.Pagination;
 import com.alan.project.dao.Question;
 import com.alan.project.dto.CommentDTO;
 import com.alan.project.dto.CommentListDTO;
@@ -50,8 +50,8 @@ public class CommentService {
         }
     }
 
-    private void createNotification(Comment comment, Integer receiverId, String outerTitle, NotificationType notificationType, Integer outerId) {
-        if (receiverId == comment.getFromUid()){ //回复自己提的问题，不产生通知
+    private void createNotification(Comment comment, String receiverId, String outerTitle, NotificationType notificationType, Integer outerId) {
+        if (receiverId.equals(comment.getFromUid())){ //回复自己提的问题，不产生通知
             return;
         }
         Notification notification = new Notification();
@@ -75,8 +75,8 @@ public class CommentService {
         Integer totalCount = commentMapper.commentCountsById(questionId);
         //计算偏移量
         Integer offset = pageSize * (currentPage - 1);
-        CommentPagination commentPagination = new CommentPagination();
-        commentPagination.setQuestionId(questionId);
+        Pagination<Integer> commentPagination = new Pagination<>();
+        commentPagination.setId(questionId);
         commentPagination.setOffset(offset);
         commentPagination.setSize(pageSize);
         Page page = new Page();

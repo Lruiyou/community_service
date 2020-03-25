@@ -2,12 +2,14 @@ package com.alan.project.controller;
 
 import com.alan.project.dao.Question;
 import com.alan.project.dao.Thumbup;
+import com.alan.project.dao.User;
 import com.alan.project.dto.HotTopicDTO;
 import com.alan.project.dto.LikeDTO;
 import com.alan.project.dto.QuestionListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.enums.ResultCode;
 import com.alan.project.service.QuestionService;
+import com.alan.project.service.UserService;
 import com.alan.project.utils.HandleHotissue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class QuestionController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private HandleHotissue handleHotissue;
@@ -38,6 +43,28 @@ public class QuestionController {
                                @RequestParam(value = "search",required = false) String search){
         QuestionListDTO questionList = questionService.getQuestionList(currentPage, pageSize, search);
         return Result.success(questionList);
+    }
+
+    /**
+     * 根据用户id获取该用户提出的问题
+     * @param uid
+     * @param currentPage
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/question/profile")
+    @ResponseBody
+    public Result getQuestionListByUid(@RequestParam("uid")String uid,
+                                       @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
+                                       @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
+        //先判断用户存不存在
+        User dbUser = userService.findUserByAccountId(uid);
+        if (dbUser == null){//不存在返回错误信息
+            return Result.failure(ResultCode.USER_NOT_EXIT);
+        }else {
+            QuestionListDTO questionList = questionService.getQuestionByUid(uid, currentPage, pageSize);
+            return Result.success(questionList);
+        }
     }
 
     /**
@@ -70,7 +97,7 @@ public class QuestionController {
      */
     @PostMapping("/question")
     @ResponseBody
-    public Result createQuestion(@RequestParam(value = "creator") Integer creator,
+    public Result createQuestion(@RequestParam(value = "creator") String creator,
                                  @RequestParam(value = "creator_name") String creatorName,
                                  @RequestParam(value = "avatar") String avatar,
                                  @RequestParam(value = "github_url") String githubUrl,
@@ -149,7 +176,7 @@ public class QuestionController {
     @PutMapping("/question/thumbup")
     @ResponseBody
     public Result thumbUp(@RequestParam(value = "question_id") Integer questionId,
-                          @RequestParam(value = "user_id")Integer userId){
+                          @RequestParam(value = "user_id")String userId){
         Thumbup record = questionService.findLikeByQidandUid(questionId, userId);
         if (record == null){ //第一次点赞
             Thumbup thumbup = new Thumbup();
@@ -179,7 +206,7 @@ public class QuestionController {
     @GetMapping("/question/thumbup")
     @ResponseBody
     public Result getLikeState(@RequestParam(value = "question_id") Integer questionId,
-                               @RequestParam(value = "user_id")Integer userId){
+                               @RequestParam(value = "user_id")String userId){
         LikeDTO likeDTO = new LikeDTO();
         Thumbup record = questionService.findLikeByQidandUid(questionId, userId);
         if(record == null || record.getStatus() == 0){ //未点赞状态

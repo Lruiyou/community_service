@@ -6,6 +6,6 @@ import lombok.Data;
 public class Thumbup {
     private Float id;
     private Integer questionId;
-    private Integer userId;
+    private String userId;
     private Integer status;
 }

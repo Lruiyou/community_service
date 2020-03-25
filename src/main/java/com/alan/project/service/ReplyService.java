@@ -76,8 +76,8 @@ public class ReplyService {
         Integer totalCount = replyMapper.getReplyCountsById(commentId);
         //计算偏移量
         Integer offset = pageSize * (currentPage - 1);
-        ReplyPagination replyPagination = new ReplyPagination();
-        replyPagination.setCommentId(commentId);
+        Pagination<Long> replyPagination = new Pagination<>();
+        replyPagination.setId(commentId);
         replyPagination.setOffset(offset);
         replyPagination.setSize(pageSize);
         Page page = new Page();

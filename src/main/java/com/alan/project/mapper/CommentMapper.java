@@ -1,7 +1,7 @@
 package com.alan.project.mapper;
 
 import com.alan.project.dao.Comment;
-import com.alan.project.dao.CommentPagination;
+import com.alan.project.dao.Pagination;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +18,7 @@ public interface CommentMapper {
     Integer commentCountsById(@Param("questionId") Integer questionId);
 
 
-    List<Comment> getCommentList(CommentPagination commentPagination);
+    List<Comment> getCommentList(Pagination commentPagination);
 
     void increaseReplyCountById(@Param("id") Long id);
 

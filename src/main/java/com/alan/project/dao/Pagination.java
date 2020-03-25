@@ -3,8 +3,8 @@ package com.alan.project.dao;
 import lombok.Data;
 
 @Data
-public class NotificationPagination {
-    private Integer uid;
+public class Pagination<T> {
+    private T id;
     private Integer offset;
     private Integer size;
 }

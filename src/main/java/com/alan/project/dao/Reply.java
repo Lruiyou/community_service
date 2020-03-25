@@ -8,10 +8,10 @@ public class Reply {
     private Integer topicId;
     private Long commentId;
     private Long replyId;
-    private Integer fromUid;
+    private String fromUid;
     private String fromName;
     private String fromAvatar;
-    private Integer toUid;
+    private String toUid;
     private String toName;
     private String toAvatar;
     private Long createTime;

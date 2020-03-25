@@ -11,8 +11,8 @@ public class UserService {
     @Resource
     private UserMapper userMapper;
 
-    public User findUserById(Integer id){
-        return userMapper.findUserById(id);
+    public User findUserByAccountId(String id){
+        return userMapper.findUserByAccountId(id);
     }
 
     public User findUserByToken(String token){

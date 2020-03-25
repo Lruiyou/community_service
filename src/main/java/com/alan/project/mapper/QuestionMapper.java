@@ -1,5 +1,6 @@
 package com.alan.project.mapper;
 
+import com.alan.project.dao.Pagination;
 import com.alan.project.dao.Query;
 import com.alan.project.dao.Question;
 import com.alan.project.dao.Thumbup;
@@ -13,8 +14,6 @@ public interface QuestionMapper {
 
     boolean createQuestion(Question question);
 
-    Question getQuestionByCreator(@Param("creator") String creator);
-
     void updateQuestionById(Question question);
 
     Integer questionCounts(Query query);
@@ -23,7 +22,7 @@ public interface QuestionMapper {
 
     List<Question> getQuestions(@Param("offset") int offset,@Param("limit") int limit);
 
-    Thumbup findLikeByQidandUid(@Param("questionId") Integer questionId, @Param("userId") Integer userId);
+    Thumbup findLikeByQidandUid(@Param("questionId") Integer questionId, @Param("userId") String userId);
 
     void createLike(Thumbup thumbup);
 
@@ -40,4 +39,6 @@ public interface QuestionMapper {
     List<Question> selectRelatedByTag(@Param("id") Integer id, @Param("tag") String regexTag);//查询标签相关联的问题
 
     void increaseCommentCountById(@Param("questionId") Integer topicId);//评论数加一
+
+    List<Question> getQuestionListByUid(Pagination pagination);
 }

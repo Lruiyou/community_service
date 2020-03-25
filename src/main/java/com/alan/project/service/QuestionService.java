@@ -1,5 +1,6 @@
 package com.alan.project.service;
 
+import com.alan.project.dao.Pagination;
 import com.alan.project.dao.Query;
 import com.alan.project.dao.Question;
 import com.alan.project.dao.Thumbup;
@@ -58,7 +59,7 @@ public class QuestionService {
         return questionListDTO;
     }
 
-    public Thumbup findLikeByQidandUid(Integer questionId, Integer userId) {
+    public Thumbup findLikeByQidandUid(Integer questionId, String userId) {
        return questionMapper.findLikeByQidandUid(questionId,userId);
     }
 
@@ -107,5 +108,25 @@ public class QuestionService {
             }
             return filterQuestionList;
         }
+    }
+
+    public QuestionListDTO getQuestionByUid(String uid, Integer currentPage, Integer pageSize) {
+        Query query = new Query();
+        Integer totalCount = questionMapper.questionCounts(query);
+        //偏移量
+        Integer offset = pageSize * (currentPage - 1);
+        Page page = new Page();
+        page.setTotal(totalCount);
+        page.setCurrentPage(currentPage);
+        page.setPageSize(pageSize);
+        Pagination<String> pagination = new Pagination<>();
+        pagination.setId(uid);
+        pagination.setOffset(offset);
+        pagination.setSize(pageSize);
+        List<Question> questionList = questionMapper.getQuestionListByUid(pagination);
+        QuestionListDTO questionListDTO = new QuestionListDTO();
+        questionListDTO.setQuestions(questionList);
+        questionListDTO.setPage(page);
+        return questionListDTO;
     }
 }

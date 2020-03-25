@@ -12,8 +12,8 @@
         select count(*) from t_reply where comment_id = #{id}
     </select>
 
-    <select id="getReplyList" parameterType="com.alan.project.dao.ReplyPagination" resultType="com.alan.project.dao.Reply">
-        select * from t_reply where comment_id = #{commentId} order by create_time desc limit #{offset},#{size}
+    <select id="getReplyList" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Reply">
+        select * from t_reply where comment_id = #{id} order by create_time desc limit #{offset},#{size}
     </select>
 
     <select id="findReplyById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Reply">

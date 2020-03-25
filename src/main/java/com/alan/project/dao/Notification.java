@@ -8,10 +8,10 @@ public class Notification {
     private Long commentId;
     private Long replyId;
     private Long parentId;
-    private Integer notifierId;
+    private String notifierId;
     private String notifierName;
     private String notifierAvatar;
-    private Integer receiverId;
+    private String receiverId;
     private Integer outerId;
     private String outerTitle;
     private Integer type;
