@@ -12,4 +12,5 @@ public class Comment {
     private  String fromName;
     private String fromAvatar;
     private Integer replyCount;
+    private Integer isExit;
 }

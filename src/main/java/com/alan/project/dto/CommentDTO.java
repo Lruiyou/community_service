@@ -12,5 +12,6 @@ public class CommentDTO {
     private  String fromName;
     private String fromAvatar;
     private Integer replyCount;
+    private Integer isExit;
     private ReplyDTO reply = new ReplyDTO();
 }

@@ -4,6 +4,7 @@ import com.alan.project.dao.Comment;
 import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.CommentRequestBody;
+import com.alan.project.enums.ExitStatus;
 import com.alan.project.enums.ResultCode;
 import com.alan.project.service.CommentService;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +35,7 @@ public class CommentController {
     public Result createComment(@RequestBody CommentRequestBody commentRequestBody){
         Comment comment = new Comment();
         BeanUtils.copyProperties(commentRequestBody,comment);
+        comment.setIsExit(ExitStatus.EXIT.getStatus());
         comment.setCreateTime(System.currentTimeMillis());
         return commentService.createComment(comment);
     }
@@ -52,5 +54,18 @@ public class CommentController {
                                  @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         CommentListDTO commentListDTO = commentService.getComments(questionId, currentPage, pageSize);
         return Result.success(commentListDTO);
+    }
+
+    /**
+     * 删除评论（并不是从数据库中删除，而是修改状态）
+     * @param commentId
+     * @return
+     */
+    @PutMapping("/comment/delete")
+    @ResponseBody
+    public Result deleteComment(@RequestParam("question_id")Integer questionId,
+                                @RequestParam("comment_id")Long commentId){
+        commentService.deleteComment(questionId,commentId);
+        return Result.success();
     }
 }

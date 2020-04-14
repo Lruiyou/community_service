@@ -41,4 +41,6 @@ public interface QuestionMapper {
     void increaseCommentCountById(@Param("questionId") Integer topicId);//评论数加一
 
     List<Question> getQuestionListByUid(Pagination pagination);
+
+    void decreaseCommentCountById(@Param("id") Integer id,@Param("count") Integer count);
 }

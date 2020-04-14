@@ -72,6 +72,10 @@
         update t_question set comment_count = comment_count + 1 where id = #{questionId}
     </update>
 
+    <update id="decreaseCommentCountById" parameterType="java.lang.Integer">
+        update t_question set comment_count = comment_count - 1 - #{count} where id = #{id}
+    </update>
+
     <select id="getQuestionListByUid"  parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Question">
         select * from t_question where creator_id = #{id} order by create_time desc limit #{offset},#{size}
     </select>

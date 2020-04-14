@@ -104,4 +104,12 @@ public class CommentService {
     public Comment findCommentById(Long id) {
        return  commentMapper.findCommentById(id);
     }
+
+    @Transactional
+    public void deleteComment(Integer questionId, Long commentId) {
+        Comment dbComment = getCommentById(commentId);
+        commentMapper.deleteCommentById(commentId);
+        //根据问题id使问题的评论数减掉
+        questionMapper.decreaseCommentCountById(questionId,dbComment.getReplyCount());
+    }
 }

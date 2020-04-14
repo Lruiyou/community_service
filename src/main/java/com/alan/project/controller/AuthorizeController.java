@@ -32,15 +32,15 @@ public class AuthorizeController {
 
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code") String code,
-                           @RequestParam(name = "state") String state,
+                           @RequestParam(name = "state")String state,
                            HttpServletResponse response){
-        String url = state.substring(state.indexOf("/"));
+       String url = state.substring(state.indexOf("/"));
         //String newState = state.substring(0,state.indexOf("/"));
         AccessToken accessToken = new AccessToken();
         accessToken.setClient_id(clientId);
         accessToken.setClient_secret(clientSecret);
         accessToken.setCode(code);
-        accessToken.setState(state);
+        //accessToken.setState(state);
         accessToken.setRedirect_uri(redirectUri);
         String token = HandleGithub.getAccessToken(accessToken);
         GithubUser githubUser = HandleGithub.getUser(token);

@@ -4,21 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alan.project.mapper.CommentMapper">
     <insert id="insertComment" parameterType="com.alan.project.dao.Comment"  useGeneratedKeys="true" keyProperty="id">
-        insert into t_comment (topic_id,from_uid,content,create_time,from_name,from_avatar)
-        values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar})
+        insert into t_comment (topic_id,from_uid,content,create_time,from_name,from_avatar,is_exit)
+        values (#{topicId},#{fromUid},#{content},#{createTime},#{fromName},#{fromAvatar},#{isExit})
     </insert>
 
     <select id="getCommentById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Comment">
         select * from t_comment where id = #{id}
     </select>
 
-
     <select id="commentCountsById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select count(*) from t_comment where topic_id = #{questionId}
     </select>
 
     <select id="getCommentList" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Comment">
-        select * from t_comment where topic_id = #{id} order by create_time desc limit #{offset},#{size}
+        select * from t_comment where topic_id = #{id} and is_exit = 1  order by create_time desc limit #{offset},#{size}
     </select>
 
     <update id="increaseReplyCountById" parameterType="java.lang.Long">
@@ -28,4 +27,8 @@
     <select id="findCommentById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Comment">
         select * from t_comment where id = #{id}
     </select>
+
+    <update id="deleteCommentById" parameterType="java.lang.Long">
+        update  t_comment set is_exit = 0 where id = #{commentId}
+    </update>
 </mapper>
