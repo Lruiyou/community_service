@@ -50,7 +50,7 @@ public class ReplyService {
     }
 
     private void createNotification(Reply reply, Question question) {
-        if (reply.getFromUid() == reply.getToUid()){ //自己回复自己，不产生通知
+        if (reply.getFromUid().equals(reply.getToUid())){ //自己回复自己，不产生通知
             return;
         }
         Notification notification = new Notification();
