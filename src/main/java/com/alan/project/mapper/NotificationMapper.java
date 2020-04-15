@@ -19,4 +19,6 @@ public interface NotificationMapper {
     void updateNotificationStatus(@Param("uid") String uid,@Param("status") int status);
 
     Integer getTotalByUid(@Param("uid") String uid);
+
+    void deleteNotificationById(Long id);
 }

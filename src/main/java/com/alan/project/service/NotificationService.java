@@ -52,4 +52,8 @@ public class NotificationService {
     public void updateNotificationStatus(String uid, int status) {
         notificationMapper.updateNotificationStatus(uid,status);
     }
+
+    public void deleteNotificationById(Long id) {
+        notificationMapper.deleteNotificationById(id);
+    }
 }

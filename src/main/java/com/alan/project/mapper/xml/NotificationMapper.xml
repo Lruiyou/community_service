@@ -4,16 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.alan.project.mapper.NotificationMapper">
     <insert id="insertNotification" parameterType="com.alan.project.dao.Notification">
-        insert into t_notification (comment_id,reply_id,parent_id,notifier_id,notifier_name,notifier_avatar,receiver_id,outer_id,outer_title,type,status,content,create_time)
-        values (#{commentId},#{replyId},#{parentId},#{notifierId},#{notifierName},#{notifierAvatar},#{receiverId},#{outerId},#{outerTitle},#{type},#{status},#{content},#{createTime});
+        insert into t_notification (comment_id,reply_id,parent_id,notifier_id,notifier_name,notifier_avatar,receiver_id,outer_id,outer_title,type,status,content,create_time,is_exit)
+        values (#{commentId},#{replyId},#{parentId},#{notifierId},#{notifierName},#{notifierAvatar},#{receiverId},#{outerId},#{outerTitle},#{type},#{status},#{content},#{createTime},#{isExit});
     </insert>
 
     <select id="getNotifications" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Notification">
-        select * from t_notification where receiver_id = #{id} order by create_time desc limit #{offset},#{size}
+        select * from t_notification where receiver_id = #{id} and is_exit = 1 order by create_time desc limit #{offset},#{size}
     </select>
 
     <select id="getUnreadCounts" resultType="java.lang.Integer">
-        select count(*) from t_notification where receiver_id = #{uid} and status = #{status}
+        select count(*) from t_notification where receiver_id = #{uid} and status = #{status} and is_exit = 1
     </select>
 
     <update id="updateNotificationStatus" >
@@ -21,6 +21,10 @@
     </update>
 
     <select id="getTotalByUid" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select count(*) from t_notification where receiver_id = #{uid}
+        select count(*) from t_notification where receiver_id = #{uid} and is_exit = 1
     </select>
+
+    <update id="deleteNotificationById" parameterType="java.lang.Long">
+        update t_notification set is_exit = 0 where id = #{id}
+    </update>
  </mapper>

@@ -8,6 +8,7 @@ import com.alan.project.dto.CommentDTO;
 import com.alan.project.dto.CommentListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.Page;
+import com.alan.project.enums.ExitStatus;
 import com.alan.project.enums.NotificationStatus;
 import com.alan.project.enums.NotificationType;
 import com.alan.project.enums.ResultCode;
@@ -71,6 +72,7 @@ public class CommentService {
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
         notification.setContent(comment.getContent());
         notification.setCreateTime(System.currentTimeMillis());
+        notification.setIsExit(ExitStatus.EXIT.getStatus());
         notificationMapper.insertNotification(notification);
     }
 

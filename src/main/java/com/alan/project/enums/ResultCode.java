@@ -5,7 +5,7 @@ public enum ResultCode {
     TOKEN_NULL(501,"token为空"),
     IMAGE_SIZE_ERROR(401,"上传的图片宽度和长度要小于600"),
     QUESTION_NOT_EXIT(402,"问题不存在，请刷新页面"),
-    COMMENT_NOT_EXIT(403,"评论不存在，请刷新页面"),
+    COMMENT_NOT_EXIT(403,"评论不存在"),
     USER_NOT_EXIT(405,"用户不存在"),
     ERROR(400,"失败");
 

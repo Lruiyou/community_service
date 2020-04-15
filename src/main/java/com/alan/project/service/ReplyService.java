@@ -4,6 +4,7 @@ import com.alan.project.dao.*;
 import com.alan.project.dto.ReplyListDTO;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.Page;
+import com.alan.project.enums.ExitStatus;
 import com.alan.project.enums.NotificationStatus;
 import com.alan.project.enums.NotificationType;
 import com.alan.project.enums.ResultCode;
@@ -35,7 +36,9 @@ public class ReplyService {
     @Transactional
     public Result createReply(Reply reply) {
         Comment dbComment = commentMapper.getCommentById(reply.getCommentId());
-        if (dbComment == null){
+        Reply dbReply = replyMapper.findReplyById(reply.getReplyId());
+        //先判断要回复的评论存不存在
+        if (dbComment.getIsExit() == 0 || dbReply.getIsExit() == 0){
             return Result.failure(ResultCode.COMMENT_NOT_EXIT);
         }else {
             //通过评论获取所属的问题
@@ -67,6 +70,7 @@ public class ReplyService {
         notification.setStatus(NotificationStatus.UNREAD.getStatus());
         notification.setContent(reply.getContent());
         notification.setCreateTime(System.currentTimeMillis());
+        notification.setIsExit(ExitStatus.EXIT.getStatus());
         notificationMapper.insertNotification(notification);
     }
 

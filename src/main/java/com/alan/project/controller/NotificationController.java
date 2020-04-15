@@ -65,5 +65,15 @@ public class NotificationController {
         return Result.success(result);
     }
 
-
+    /**
+     * 根据id删除消息
+     * @param id
+     * @return
+     */
+    @PutMapping("/notification/delete")
+    @ResponseBody
+    public Result deleteNotification(@RequestParam("id")Long id){
+        notificationService.deleteNotificationById(id);
+        return Result.success();
+    }
 }

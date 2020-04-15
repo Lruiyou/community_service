@@ -18,4 +18,5 @@ public class Notification {
     private Long createTime;
     private Integer status;
     private String content;
+    private Integer isExit;
 }
