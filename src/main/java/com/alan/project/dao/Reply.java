@@ -16,4 +16,5 @@ public class Reply {
     private String toAvatar;
     private Long createTime;
     private String content;
+    private Integer isExit;
 }

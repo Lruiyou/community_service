@@ -14,6 +14,7 @@ import com.alan.project.enums.ResultCode;
 import com.alan.project.mapper.CommentMapper;
 import com.alan.project.mapper.NotificationMapper;
 import com.alan.project.mapper.QuestionMapper;
+import com.alan.project.mapper.ReplyMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,9 @@ public class CommentService {
 
     @Resource
     private QuestionMapper questionMapper;
+
+    @Resource
+    private ReplyMapper replyMapper;
 
     @Resource
     private NotificationMapper notificationMapper;
@@ -109,6 +113,10 @@ public class CommentService {
     public void deleteComment(Integer questionId, Long commentId) {
         Comment dbComment = getCommentById(commentId);
         commentMapper.deleteCommentById(commentId);
+        //删除评论下的回复数
+        if (dbComment.getReplyCount() > 0){
+            replyMapper.deleteReplyByCommentId(commentId);
+        }
         //根据问题id使问题的评论数减掉
         questionMapper.decreaseCommentCountById(questionId,dbComment.getReplyCount());
     }

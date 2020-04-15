@@ -100,4 +100,14 @@ public class ReplyService {
     public Reply findReplyById(Long id) {
         return replyMapper.findReplyById(id);
     }
+
+    @Transactional
+    public void deleteReplyById(Integer questionId, Long commentId, Long replyId) {
+        //删除回复
+        replyMapper.deleteReplyById(replyId);
+        //评论的回复数减一
+        commentMapper.decreaseReplyCountById(commentId);
+        //所对应问题的评论数减一
+        questionMapper.decreaseCommentCountById(questionId,0);
+    }
 }

@@ -25,4 +25,6 @@ public interface CommentMapper {
     Comment findCommentById(@Param("id") Long id);
 
     void deleteCommentById(@Param("commentId") Long commentId);
+
+    void decreaseReplyCountById(@Param("commentId") Long commentId);
 }

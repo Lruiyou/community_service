@@ -17,4 +17,8 @@ public interface ReplyMapper {
     List<Reply> getReplyList(Pagination replyPagination);
 
     Reply findReplyById(@Param("id") Long id);
+
+    void deleteReplyByCommentId(@Param("commentId")Long commentId);
+
+    void deleteReplyById(@Param("id") Long id);
 }

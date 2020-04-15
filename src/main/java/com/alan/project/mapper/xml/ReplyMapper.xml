@@ -9,14 +9,23 @@
   </insert>
 
     <select id="getReplyCountsById" parameterType="java.lang.Long" resultType="java.lang.Integer">
-        select count(*) from t_reply where comment_id = #{id}
+        select count(*) from t_reply where comment_id = #{id} and is_exit = 1
     </select>
 
     <select id="getReplyList" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Reply">
-        select * from t_reply where comment_id = #{id} order by create_time desc limit #{offset},#{size}
+        select * from t_reply where comment_id = #{id} and is_exit = 1 order by create_time desc limit #{offset},#{size}
     </select>
 
     <select id="findReplyById" parameterType="java.lang.Long" resultType="com.alan.project.dao.Reply">
         select * from t_reply where id = #{id}
     </select>
+
+    <update id="deleteReplyByCommentId" parameterType="java.lang.Long">
+        update t_reply set is_exit = 0 where comment_id = #{commentId}
+    </update>
+
+    <update id="deleteReplyById" parameterType="java.lang.Long">
+        update t_reply set is_exit = 0 where id = #{id}
+    </update>
+
 </mapper>

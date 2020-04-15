@@ -3,6 +3,7 @@ package com.alan.project.controller;
 import com.alan.project.dao.Reply;
 import com.alan.project.dto.Result;
 import com.alan.project.entity.ReplyRequestBody;
+import com.alan.project.enums.ExitStatus;
 import com.alan.project.enums.ResultCode;
 import com.alan.project.service.ReplyService;
 import org.springframework.beans.BeanUtils;
@@ -33,6 +34,7 @@ public class ReplyController {
         Reply reply = new Reply();
         BeanUtils.copyProperties(requestBody,reply);
         reply.setCreateTime(System.currentTimeMillis());
+        reply.setIsExit(ExitStatus.EXIT.getStatus());
         return replyService.createReply(reply);
     }
 
@@ -49,5 +51,19 @@ public class ReplyController {
                             @RequestParam(value = "currentPage",defaultValue = "1") Integer currentPage,
                             @RequestParam(value = "pageSize",defaultValue = "5") Integer pageSize){
         return replyService.getReplyList(commentId,currentPage,pageSize);
+    }
+
+    /**
+     * 根据id删除回复
+     * @param replyId
+     * @return
+     */
+    @PutMapping("/reply/delete")
+    @ResponseBody
+    public Result deleteReply(@RequestParam("question_id")Integer questionId,
+                              @RequestParam("comment_id")Long commentId,
+                              @RequestParam("reply_id")Long replyId){
+        replyService.deleteReplyById(questionId,commentId,replyId);
+        return Result.success();
     }
 }

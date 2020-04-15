@@ -13,7 +13,7 @@
     </select>
 
     <select id="commentCountsById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) from t_comment where topic_id = #{questionId}
+        select count(*) from t_comment where topic_id = #{questionId} and is_exit = 1
     </select>
 
     <select id="getCommentList" parameterType="com.alan.project.dao.Pagination" resultType="com.alan.project.dao.Comment">
@@ -30,5 +30,9 @@
 
     <update id="deleteCommentById" parameterType="java.lang.Long">
         update  t_comment set is_exit = 0 where id = #{commentId}
+    </update>
+
+    <update id="decreaseReplyCountById" parameterType="java.lang.Long">
+        update t_comment set reply_count = reply_count - 1 where id = #{commentId}
     </update>
 </mapper>
