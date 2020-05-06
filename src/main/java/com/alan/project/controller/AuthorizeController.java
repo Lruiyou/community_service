@@ -44,7 +44,6 @@ public class AuthorizeController {
         accessToken.setRedirect_uri(redirectUri);
         String token = HandleGithub.getAccessToken(accessToken);
         GithubUser githubUser = HandleGithub.getUser(token);
-
         if (githubUser != null && githubUser.getId() != null) {
             User user = new User();
             String newToken = UUID.randomUUID().toString();

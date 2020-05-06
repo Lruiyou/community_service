@@ -30,11 +30,14 @@ public class HandleGithub {
 
     public static GithubUser getUser(String token){
         System.out.println(token);
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("https://api.github.com/user?access_token="+token)
+                .url("https://api.github.com/user")
+                .header("Authorization","token "+token)
                 .build();
         try {
-            Response response = OKHttpUtil.getInstance().newCall(request).execute();
+            //Response response = OKHttpUtil.getInstance().newCall(request).execute();
+            Response response = client.newCall(request).execute();
             String s = response.body().string();
             GithubUser user = JSON.parseObject(s, GithubUser.class);
             return user;
